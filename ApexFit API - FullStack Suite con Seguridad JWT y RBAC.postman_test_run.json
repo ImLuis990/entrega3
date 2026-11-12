@@ -1,0 +1,1204 @@
+{
+	"id": "bc7328b0-6c97-4525-bee7-24d4029d0c85",
+	"name": "ApexFit API - FullStack Suite con Seguridad JWT y RBAC",
+	"timestamp": "2026-11-12T22:19:45.085Z",
+	"collection_id": "58381450-c5715b7d-3332-4595-bdda-a3a1e6336534",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 47,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-11-12T22:19:19.490Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "ba6c8299-8d78-4e15-a5cf-6db751096901",
+			"name": "1.1 Registrar Usuario Administrador",
+			"url": "http://localhost:8080/api/v1/auth/register",
+			"time": 184,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code es 200 OK o 400 (si ya existe)": true,
+				"Respuesta contiene mensaje": true
+			},
+			"testPassFailCounts": {
+				"Status code es 200 OK o 400 (si ya existe)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Respuesta contiene mensaje": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				184
+			],
+			"allTests": [
+				{
+					"Status code es 200 OK o 400 (si ya existe)": true,
+					"Respuesta contiene mensaje": true
+				}
+			]
+		},
+		{
+			"id": "326044b0-a8e4-412e-aae8-c2e7e17ef82d",
+			"name": "1.2 Registrar Usuario Entrenador",
+			"url": "http://localhost:8080/api/v1/auth/register",
+			"time": 86,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code es 200 o 400 (ya registrado)": true
+			},
+			"testPassFailCounts": {
+				"Status code es 200 o 400 (ya registrado)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				86
+			],
+			"allTests": [
+				{
+					"Status code es 200 o 400 (ya registrado)": true
+				}
+			]
+		},
+		{
+			"id": "1cf0f5a1-a9f2-4ec4-a935-cd7ef7b4c406",
+			"name": "1.3 Registrar Usuario Cliente",
+			"url": "http://localhost:8080/api/v1/auth/register",
+			"time": 81,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code es 200 o 400 (ya registrado)": true
+			},
+			"testPassFailCounts": {
+				"Status code es 200 o 400 (ya registrado)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				81
+			],
+			"allTests": [
+				{
+					"Status code es 200 o 400 (ya registrado)": true
+				}
+			]
+		},
+		{
+			"id": "fc9e899b-dfda-4df4-8cee-c69d89be4a35",
+			"name": "1.4 Login Administrador (Capturar Token Admin)",
+			"url": "http://localhost:8080/api/v1/auth/login",
+			"time": 444,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Login Admin exitoso - Status code 200": true,
+				"Retorna JWT token y rol ADMINISTRADOR": true,
+				"Tiempo de respuesta menor a 1500ms": true
+			},
+			"testPassFailCounts": {
+				"Login Admin exitoso - Status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Retorna JWT token y rol ADMINISTRADOR": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tiempo de respuesta menor a 1500ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				444
+			],
+			"allTests": [
+				{
+					"Login Admin exitoso - Status code 200": true,
+					"Retorna JWT token y rol ADMINISTRADOR": true,
+					"Tiempo de respuesta menor a 1500ms": true
+				}
+			]
+		},
+		{
+			"id": "7254165e-f343-4267-af2e-2bf34d0367c9",
+			"name": "1.5 Login Entrenador (Capturar Token Entrenador)",
+			"url": "http://localhost:8080/api/v1/auth/login",
+			"time": 434,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Login Entrenador exitoso - Status 200": true,
+				"Retorna token y rol ENTRENADOR": true
+			},
+			"testPassFailCounts": {
+				"Login Entrenador exitoso - Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Retorna token y rol ENTRENADOR": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				434
+			],
+			"allTests": [
+				{
+					"Login Entrenador exitoso - Status 200": true,
+					"Retorna token y rol ENTRENADOR": true
+				}
+			]
+		},
+		{
+			"id": "8ba5126f-93ec-4ddc-a639-69ae8d63a3f2",
+			"name": "1.6 Login Cliente (Capturar Token Cliente)",
+			"url": "http://localhost:8080/api/v1/auth/login",
+			"time": 445,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Login Cliente exitoso - Status 200": true,
+				"Retorna token y rol CLIENTE": true
+			},
+			"testPassFailCounts": {
+				"Login Cliente exitoso - Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Retorna token y rol CLIENTE": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				445
+			],
+			"allTests": [
+				{
+					"Login Cliente exitoso - Status 200": true,
+					"Retorna token y rol CLIENTE": true
+				}
+			]
+		},
+		{
+			"id": "f010bc1b-ec93-404a-85eb-96aca79323b4",
+			"name": "1.7 Login Fallido - Credenciales Inválidas (401 o 400)",
+			"url": "http://localhost:8080/api/v1/auth/login",
+			"time": 362,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Credenciales inválidas rechazan la autenticación": true,
+				"Respuesta contiene información de error": true
+			},
+			"testPassFailCounts": {
+				"Credenciales inválidas rechazan la autenticación": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Respuesta contiene información de error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				362
+			],
+			"allTests": [
+				{
+					"Credenciales inválidas rechazan la autenticación": true,
+					"Respuesta contiene información de error": true
+				}
+			]
+		},
+		{
+			"id": "a2f85f0f-9d72-4f9e-b136-cee78d6631c1",
+			"name": "1.8 Registro Inválido - Validación Formato (400 Bad Request)",
+			"url": "http://localhost:8080/api/v1/auth/register",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Validación falla con Status 400 Bad Request": true,
+				"Retorna detalles de validación de campos": true
+			},
+			"testPassFailCounts": {
+				"Validación falla con Status 400 Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Retorna detalles de validación de campos": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Validación falla con Status 400 Bad Request": true,
+					"Retorna detalles de validación de campos": true
+				}
+			]
+		},
+		{
+			"id": "c2bac90d-38e9-4e74-8d60-7871e8dce6b0",
+			"name": "2.1 Listar Usuarios Paginados (Admin/Entrenador)",
+			"url": "http://localhost:8080/api/v1/usuarios?page=0&size=10",
+			"time": 866,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true,
+				"Respuesta paginada contiene content y pageable": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Respuesta paginada contiene content y pageable": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				866
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true,
+					"Respuesta paginada contiene content y pageable": true
+				}
+			]
+		},
+		{
+			"id": "c521985a-bdbe-4fde-b63c-9f8c4d1d497c",
+			"name": "2.2 Obtener Usuario por ID",
+			"url": "http://localhost:8080/api/v1/usuarios/1",
+			"time": 785,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 o 404": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 o 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				785
+			],
+			"allTests": [
+				{
+					"Status code 200 o 404": true
+				}
+			]
+		},
+		{
+			"id": "0ed87953-2104-4f2f-90b9-a0ff66e557b3",
+			"name": "2.3 Buscar Usuario por Correo",
+			"url": "http://localhost:8080/api/v1/usuarios/buscar?correo=carlos@apexfit.com",
+			"time": 806,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Búsqueda por correo exitosa (200 OK)": true
+			},
+			"testPassFailCounts": {
+				"Búsqueda por correo exitosa (200 OK)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				806
+			],
+			"allTests": [
+				{
+					"Búsqueda por correo exitosa (200 OK)": true
+				}
+			]
+		},
+		{
+			"id": "d724da3d-62d7-4adf-9799-0f5a2769fdca",
+			"name": "2.4 Actualizar Usuario",
+			"url": "http://localhost:8080/api/v1/usuarios/1",
+			"time": 707,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Actualización exitosa o no encontrado": true
+			},
+			"testPassFailCounts": {
+				"Actualización exitosa o no encontrado": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				707
+			],
+			"allTests": [
+				{
+					"Actualización exitosa o no encontrado": true
+				}
+			]
+		},
+		{
+			"id": "5879a1fe-3f3c-454f-a9ba-1cc52abc8d8a",
+			"name": "3.1 Crear Ejercicio (Rol Entrenador/Admin)",
+			"url": "http://localhost:8080/api/v1/ejercicios",
+			"time": 648,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Ejercicio creado 201 Created o 400 existente": true
+			},
+			"testPassFailCounts": {
+				"Ejercicio creado 201 Created o 400 existente": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				648
+			],
+			"allTests": [
+				{
+					"Ejercicio creado 201 Created o 400 existente": true
+				}
+			]
+		},
+		{
+			"id": "ce8d3353-1f2b-4b49-bab5-846799e11295",
+			"name": "3.2 Listar Ejercicios Paginados",
+			"url": "http://localhost:8080/api/v1/ejercicios?page=0&size=10",
+			"time": 849,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true,
+				"Estructura paginada contiene items": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Estructura paginada contiene items": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				849
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true,
+					"Estructura paginada contiene items": true
+				}
+			]
+		},
+		{
+			"id": "8924fcc1-61d3-46d5-8911-495e3395ba17",
+			"name": "3.3 Filtrar Ejercicios por Grupo Muscular",
+			"url": "http://localhost:8080/api/v1/ejercicios/filtrar?grupoMuscular=Pecho",
+			"time": 788,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 y filtrado funcional": true
+			},
+			"testPassFailCounts": {
+				"Status 200 y filtrado funcional": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				788
+			],
+			"allTests": [
+				{
+					"Status 200 y filtrado funcional": true
+				}
+			]
+		},
+		{
+			"id": "30bc8abb-79f4-4ed1-947f-783d67515d35",
+			"name": "3.4 Filtrar Ejercicios por Nivel Dificultad",
+			"url": "http://localhost:8080/api/v1/ejercicios/dificultad?nivelDificultad=intermedio",
+			"time": 776,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 en filtro por dificultad": true
+			},
+			"testPassFailCounts": {
+				"Status 200 en filtro por dificultad": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				776
+			],
+			"allTests": [
+				{
+					"Status 200 en filtro por dificultad": true
+				}
+			]
+		},
+		{
+			"id": "9d5ebdaa-3417-48b9-bacd-74bbc26c01de",
+			"name": "4.1 Crear Rutina (Entrenador/Admin)",
+			"url": "http://localhost:8080/api/v1/rutinas",
+			"time": 784,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Rutina creada 201 Created": true
+			},
+			"testPassFailCounts": {
+				"Rutina creada 201 Created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				784
+			],
+			"allTests": [
+				{
+					"Rutina creada 201 Created": true
+				}
+			]
+		},
+		{
+			"id": "a2021010-dd08-49a9-a7ed-7a00f52c26ae",
+			"name": "4.2 Listar Rutinas (Entrenador/Admin)",
+			"url": "http://localhost:8080/api/v1/rutinas?page=0&size=10",
+			"time": 847,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				847
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "fc468ff3-5f2b-462e-ba4e-559f3449fee5",
+			"name": "4.3 Obtener Rutinas de un Cliente",
+			"url": "http://localhost:8080/api/v1/rutinas/cliente/1",
+			"time": 777,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 y formato de rutinas cliente correcto": true
+			},
+			"testPassFailCounts": {
+				"Status 200 y formato de rutinas cliente correcto": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				777
+			],
+			"allTests": [
+				{
+					"Status 200 y formato de rutinas cliente correcto": true
+				}
+			]
+		},
+		{
+			"id": "d0f016f3-4aad-43a6-9f96-b8baf9431797",
+			"name": "5.1 Asociar Ejercicio a Rutina",
+			"url": "http://localhost:8080/api/v1/rutina-ejercicios",
+			"time": 712,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Asociación creada 201 Created o 400": true
+			},
+			"testPassFailCounts": {
+				"Asociación creada 201 Created o 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				712
+			],
+			"allTests": [
+				{
+					"Asociación creada 201 Created o 400": true
+				}
+			]
+		},
+		{
+			"id": "bd72f5d5-98f1-440b-b91b-2831c379bbad",
+			"name": "5.2 Listar Ejercicios de una Rutina",
+			"url": "http://localhost:8080/api/v1/rutina-ejercicios/rutina/1",
+			"time": 773,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				773
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "713a2faf-fc56-4486-88b6-d26cf08aa352",
+			"name": "6.1 Registrar Medición de Progreso",
+			"url": "http://localhost:8080/api/v1/progresos",
+			"time": 715,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Progreso registrado 201 Created": true
+			},
+			"testPassFailCounts": {
+				"Progreso registrado 201 Created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				715
+			],
+			"allTests": [
+				{
+					"Progreso registrado 201 Created": true
+				}
+			]
+		},
+		{
+			"id": "679b8dd2-aa9d-4559-a5f7-2fb290f6266d",
+			"name": "6.2 Obtener Historial de Progresos por Usuario",
+			"url": "http://localhost:8080/api/v1/progresos/usuario/1",
+			"time": 791,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				791
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "02459c17-4fd4-4930-9634-1858567260c7",
+			"name": "7.1 Crear Membresía (Rol Admin)",
+			"url": "http://localhost:8080/api/v1/membresias",
+			"time": 785,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Membresía creada 201 Created o 400": true
+			},
+			"testPassFailCounts": {
+				"Membresía creada 201 Created o 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				785
+			],
+			"allTests": [
+				{
+					"Membresía creada 201 Created o 400": true
+				}
+			]
+		},
+		{
+			"id": "cff3018a-7e7d-4ed6-9fe1-f8cfb2265649",
+			"name": "7.2 Listar Membresías (Rol Admin)",
+			"url": "http://localhost:8080/api/v1/membresias",
+			"time": 778,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				778
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "f564608e-4906-4004-ab05-8120b3f30d87",
+			"name": "7.3 Obtener Membresías de un Usuario",
+			"url": "http://localhost:8080/api/v1/membresias/usuario/1",
+			"time": 776,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				776
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "65d3c602-8430-48e4-8c48-b2c30aff3d00",
+			"name": "8.1 Registrar Asistencia QR (Cliente/Admin)",
+			"url": "http://localhost:8080/api/v1/asistencias",
+			"time": 710,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Asistencia registrada 201 Created": true
+			},
+			"testPassFailCounts": {
+				"Asistencia registrada 201 Created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				710
+			],
+			"allTests": [
+				{
+					"Asistencia registrada 201 Created": true
+				}
+			]
+		},
+		{
+			"id": "6d5699c0-ee29-40a2-9c40-be78ed60d369",
+			"name": "8.2 Listar Asistencias de un Usuario",
+			"url": "http://localhost:8080/api/v1/asistencias/usuario/1",
+			"time": 772,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				772
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "b963b0f8-6010-4236-a6f6-e701c4ac4483",
+			"name": "9.1 Crear Alerta de Inactividad (Entrenador/Admin)",
+			"url": "http://localhost:8080/api/v1/alertas",
+			"time": 712,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Alerta creada 201 Created": true
+			},
+			"testPassFailCounts": {
+				"Alerta creada 201 Created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				712
+			],
+			"allTests": [
+				{
+					"Alerta creada 201 Created": true
+				}
+			]
+		},
+		{
+			"id": "5194d7ec-0179-4cb2-85bd-b29256397987",
+			"name": "9.2 Obtener Alertas de un Usuario",
+			"url": "http://localhost:8080/api/v1/alertas/usuario/1",
+			"time": 777,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				777
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "c0c27d8e-d99b-44a0-ad60-6682da516109",
+			"name": "10.1 Asignar Entrenador a Cliente (Rol Admin)",
+			"url": "http://localhost:8080/api/v1/entrenador-cliente",
+			"time": 779,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Asignación procesada 201 o 400": true
+			},
+			"testPassFailCounts": {
+				"Asignación procesada 201 o 400": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				779
+			],
+			"allTests": [
+				{
+					"Asignación procesada 201 o 400": true
+				}
+			]
+		},
+		{
+			"id": "61d1ae06-8989-4217-b7d7-f2cb98a1b46c",
+			"name": "10.2 Listar Clientes de un Entrenador",
+			"url": "http://localhost:8080/api/v1/entrenador-cliente/entrenador/2",
+			"time": 775,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code 200 OK": true
+			},
+			"testPassFailCounts": {
+				"Status code 200 OK": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				775
+			],
+			"allTests": [
+				{
+					"Status code 200 OK": true
+				}
+			]
+		},
+		{
+			"id": "ce545bb7-21be-4f7f-8a08-68a7c4804044",
+			"name": "11.1 Petición sin Token - Rechazo 401 Unauthorized",
+			"url": "http://localhost:8080/api/v1/ejercicios",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Acceso denegado con 401 Unauthorized": true,
+				"Mensaje de error indica falta de autorización": true
+			},
+			"testPassFailCounts": {
+				"Acceso denegado con 401 Unauthorized": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Mensaje de error indica falta de autorización": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Acceso denegado con 401 Unauthorized": true,
+					"Mensaje de error indica falta de autorización": true
+				}
+			]
+		},
+		{
+			"id": "bde71df3-e8b1-4c3a-9b54-6ea346d90d8e",
+			"name": "11.2 Cliente intenta Crear Ejercicio - Rechazo 403 Forbidden",
+			"url": "http://localhost:8080/api/v1/ejercicios",
+			"time": 358,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"RBAC bloquea acción no permitida con 403 Forbidden": true,
+				"Mensaje de error deniega por rol insuficiente": true
+			},
+			"testPassFailCounts": {
+				"RBAC bloquea acción no permitida con 403 Forbidden": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Mensaje de error deniega por rol insuficiente": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				358
+			],
+			"allTests": [
+				{
+					"RBAC bloquea acción no permitida con 403 Forbidden": true,
+					"Mensaje de error deniega por rol insuficiente": true
+				}
+			]
+		},
+		{
+			"id": "9e6a182c-99d5-498d-a6ef-26282b5ef589",
+			"name": "11.3 Cliente intenta Crear Membresía - Rechazo 403 Forbidden",
+			"url": "http://localhost:8080/api/v1/membresias",
+			"time": 361,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"RBAC deniega creación de membresía a Cliente (403)": true
+			},
+			"testPassFailCounts": {
+				"RBAC deniega creación de membresía a Cliente (403)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				361
+			],
+			"allTests": [
+				{
+					"RBAC deniega creación de membresía a Cliente (403)": true
+				}
+			]
+		},
+		{
+			"id": "cef3b798-f1f5-475b-b73c-bf8f833bba49",
+			"name": "11.4 Entrenador intenta Eliminar Usuario - Rechazo 403 Forbidden",
+			"url": "http://localhost:8080/api/v1/usuarios/1",
+			"time": 360,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Solo Administrador puede eliminar usuarios (403 para entrenador)": true
+			},
+			"testPassFailCounts": {
+				"Solo Administrador puede eliminar usuarios (403 para entrenador)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				360
+			],
+			"allTests": [
+				{
+					"Solo Administrador puede eliminar usuarios (403 para entrenador)": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 21617,
+	"collection": {
+		"requests": [
+			{
+				"id": "ba6c8299-8d78-4e15-a5cf-6db751096901",
+				"method": "POST"
+			},
+			{
+				"id": "326044b0-a8e4-412e-aae8-c2e7e17ef82d",
+				"method": "POST"
+			},
+			{
+				"id": "1cf0f5a1-a9f2-4ec4-a935-cd7ef7b4c406",
+				"method": "POST"
+			},
+			{
+				"id": "fc9e899b-dfda-4df4-8cee-c69d89be4a35",
+				"method": "POST"
+			},
+			{
+				"id": "7254165e-f343-4267-af2e-2bf34d0367c9",
+				"method": "POST"
+			},
+			{
+				"id": "8ba5126f-93ec-4ddc-a639-69ae8d63a3f2",
+				"method": "POST"
+			},
+			{
+				"id": "f010bc1b-ec93-404a-85eb-96aca79323b4",
+				"method": "POST"
+			},
+			{
+				"id": "a2f85f0f-9d72-4f9e-b136-cee78d6631c1",
+				"method": "POST"
+			},
+			{
+				"id": "c2bac90d-38e9-4e74-8d60-7871e8dce6b0",
+				"method": "GET"
+			},
+			{
+				"id": "c521985a-bdbe-4fde-b63c-9f8c4d1d497c",
+				"method": "GET"
+			},
+			{
+				"id": "0ed87953-2104-4f2f-90b9-a0ff66e557b3",
+				"method": "GET"
+			},
+			{
+				"id": "d724da3d-62d7-4adf-9799-0f5a2769fdca",
+				"method": "PUT"
+			},
+			{
+				"id": "5879a1fe-3f3c-454f-a9ba-1cc52abc8d8a",
+				"method": "POST"
+			},
+			{
+				"id": "ce8d3353-1f2b-4b49-bab5-846799e11295",
+				"method": "GET"
+			},
+			{
+				"id": "8924fcc1-61d3-46d5-8911-495e3395ba17",
+				"method": "GET"
+			},
+			{
+				"id": "30bc8abb-79f4-4ed1-947f-783d67515d35",
+				"method": "GET"
+			},
+			{
+				"id": "9d5ebdaa-3417-48b9-bacd-74bbc26c01de",
+				"method": "POST"
+			},
+			{
+				"id": "a2021010-dd08-49a9-a7ed-7a00f52c26ae",
+				"method": "GET"
+			},
+			{
+				"id": "fc468ff3-5f2b-462e-ba4e-559f3449fee5",
+				"method": "GET"
+			},
+			{
+				"id": "d0f016f3-4aad-43a6-9f96-b8baf9431797",
+				"method": "POST"
+			},
+			{
+				"id": "bd72f5d5-98f1-440b-b91b-2831c379bbad",
+				"method": "GET"
+			},
+			{
+				"id": "713a2faf-fc56-4486-88b6-d26cf08aa352",
+				"method": "POST"
+			},
+			{
+				"id": "679b8dd2-aa9d-4559-a5f7-2fb290f6266d",
+				"method": "GET"
+			},
+			{
+				"id": "02459c17-4fd4-4930-9634-1858567260c7",
+				"method": "POST"
+			},
+			{
+				"id": "cff3018a-7e7d-4ed6-9fe1-f8cfb2265649",
+				"method": "GET"
+			},
+			{
+				"id": "f564608e-4906-4004-ab05-8120b3f30d87",
+				"method": "GET"
+			},
+			{
+				"id": "65d3c602-8430-48e4-8c48-b2c30aff3d00",
+				"method": "POST"
+			},
+			{
+				"id": "6d5699c0-ee29-40a2-9c40-be78ed60d369",
+				"method": "GET"
+			},
+			{
+				"id": "b963b0f8-6010-4236-a6f6-e701c4ac4483",
+				"method": "POST"
+			},
+			{
+				"id": "5194d7ec-0179-4cb2-85bd-b29256397987",
+				"method": "GET"
+			},
+			{
+				"id": "c0c27d8e-d99b-44a0-ad60-6682da516109",
+				"method": "POST"
+			},
+			{
+				"id": "61d1ae06-8989-4217-b7d7-f2cb98a1b46c",
+				"method": "GET"
+			},
+			{
+				"id": "ce545bb7-21be-4f7f-8a08-68a7c4804044",
+				"method": "GET"
+			},
+			{
+				"id": "bde71df3-e8b1-4c3a-9b54-6ea346d90d8e",
+				"method": "POST"
+			},
+			{
+				"id": "9e6a182c-99d5-498d-a6ef-26282b5ef589",
+				"method": "POST"
+			},
+			{
+				"id": "cef3b798-f1f5-475b-b73c-bf8f833bba49",
+				"method": "DELETE"
+			}
+		]
+	}
+}

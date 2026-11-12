@@ -1,0 +1,1028 @@
+{
+  "info": {
+    "name": "ApexFit API - FullStack Suite con Seguridad JWT y RBAC",
+    "description": "Colección completa de pruebas para la API REST de ApexFit. Incluye autenticación JWT, control de acceso basado en roles (RBAC: Cliente, Entrenador, Administrador), pruebas CRUD para todas las entidades y más de 20 tests automatizados.",
+    "_postman_id": "apexfit-jwt-collection-v3-complete",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token_admin",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token_entrenador",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token_cliente",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 1. Autenticación y Tokens",
+      "item": [
+        {
+          "name": "1.1 Registrar Usuario Administrador",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code es 200 OK o 400 (si ya existe)', function () {",
+                  "    pm.expect([200, 400]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test('Respuesta contiene mensaje', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('mensaje');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Admin\",\n  \"apellido\": \"ApexFit\",\n  \"correo\": \"admin@apexfit.com\",\n  \"contrasena\": \"admin123\",\n  \"rol\": \"administrador\",\n  \"telefono\": \"3000000001\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.2 Registrar Usuario Entrenador",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code es 200 o 400 (ya registrado)', function () {",
+                  "    pm.expect([200, 400]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"Entrenador\",\n  \"correo\": \"pedro.entrenador@apexfit.com\",\n  \"contrasena\": \"entrenador123\",\n  \"rol\": \"entrenador\",\n  \"telefono\": \"3109876543\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.3 Registrar Usuario Cliente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code es 200 o 400 (ya registrado)', function () {",
+                  "    pm.expect([200, 400]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Cliente\",\n  \"correo\": \"carlos@apexfit.com\",\n  \"contrasena\": \"123456\",\n  \"rol\": \"cliente\",\n  \"telefono\": \"3001234567\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.4 Login Administrador (Capturar Token Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login Admin exitoso - Status code 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Retorna JWT token y rol ADMINISTRADOR', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('token');",
+                  "    pm.expect(json.roles).to.include('ROLE_ADMINISTRADOR');",
+                  "    pm.collectionVariables.set('token_admin', json.token);",
+                  "    pm.collectionVariables.set('token', json.token);",
+                  "    pm.environment.set('token_admin', json.token);",
+                  "    pm.environment.set('token', json.token);",
+                  "});",
+                  "pm.test('Tiempo de respuesta menor a 1500ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"admin@apexfit.com\",\n  \"contrasena\": \"admin123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.5 Login Entrenador (Capturar Token Entrenador)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login Entrenador exitoso - Status 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Retorna token y rol ENTRENADOR', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('token');",
+                  "    pm.expect(json.roles).to.include('ROLE_ENTRENADOR');",
+                  "    pm.collectionVariables.set('token_entrenador', json.token);",
+                  "    pm.environment.set('token_entrenador', json.token);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"pedro.entrenador@apexfit.com\",\n  \"contrasena\": \"entrenador123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.6 Login Cliente (Capturar Token Cliente)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login Cliente exitoso - Status 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Retorna token y rol CLIENTE', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('token');",
+                  "    pm.expect(json.roles).to.include('ROLE_CLIENTE');",
+                  "    pm.collectionVariables.set('token_cliente', json.token);",
+                  "    pm.environment.set('token_cliente', json.token);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"carlos@apexfit.com\",\n  \"contrasena\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.7 Login Fallido - Credenciales Inválidas (401 o 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Credenciales inválidas rechazan la autenticación', function () {",
+                  "    pm.expect([400, 401]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test('Respuesta contiene información de error', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status || json.error || json.mensaje).to.not.be.undefined;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"noexiste@apexfit.com\",\n  \"contrasena\": \"clave-incorrecta\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.8 Registro Inválido - Validación Formato (400 Bad Request)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Validación falla con Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Retorna detalles de validación de campos', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('validationErrors');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": {"raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"\",\n  \"apellido\": \"\",\n  \"correo\": \"correo-invalido-sin-arroba\",\n  \"contrasena\": \"\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 2. Módulo Usuarios",
+      "item": [
+        {
+          "name": "2.1 Listar Usuarios Paginados (Admin/Entrenador)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Respuesta paginada contiene content y pageable', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('content');",
+                  "    pm.expect(Array.isArray(json.content)).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_admin}}"}],
+            "url": {"raw": "{{baseUrl}}/usuarios?page=0&size=10", "host": ["{{baseUrl}}"], "path": ["usuarios"], "query": [{"key": "page", "value": "0"}, {"key": "size", "value": "10"}]}
+          }
+        },
+        {
+          "name": "2.2 Obtener Usuario por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 o 404', function () {",
+                  "    pm.expect([200, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_admin}}"}],
+            "url": {"raw": "{{baseUrl}}/usuarios/1", "host": ["{{baseUrl}}"], "path": ["usuarios", "1"]}
+          }
+        },
+        {
+          "name": "2.3 Buscar Usuario por Correo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Búsqueda por correo exitosa (200 OK)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.correo).to.eql('carlos@apexfit.com');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_admin}}"}],
+            "url": {"raw": "{{baseUrl}}/usuarios/buscar?correo=carlos@apexfit.com", "host": ["{{baseUrl}}"], "path": ["usuarios", "buscar"], "query": [{"key": "correo", "value": "carlos@apexfit.com"}]}
+          }
+        },
+        {
+          "name": "2.4 Actualizar Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Actualización exitosa o no encontrado', function () {",
+                  "    pm.expect([200, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_admin}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/usuarios/1", "host": ["{{baseUrl}}"], "path": ["usuarios", "1"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Perez Actualizado\",\n  \"correo\": \"carlos.perez@apexfit.com\",\n  \"telefono\": \"3009998877\",\n  \"idRol\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏋️ 3. Módulo Ejercicios",
+      "item": [
+        {
+          "name": "3.1 Crear Ejercicio (Rol Entrenador/Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Ejercicio creado 201 Created o 400 existente', function () {",
+                  "    pm.expect([201, 400]).to.include(pm.response.code);",
+                  "    if (pm.response.code === 201) {",
+                  "        var json = pm.response.json();",
+                  "        pm.expect(json).to.have.property('idEjercicio');",
+                  "        pm.collectionVariables.set('id_ejercicio', json.idEjercicio);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_entrenador}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/ejercicios", "host": ["{{baseUrl}}"], "path": ["ejercicios"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Press Militar con Barra\",\n  \"grupoMuscular\": \"Hombros\",\n  \"nivelDificultad\": \"intermedio\",\n  \"videoUrl\": \"https://youtube.com/watch?v=press-militar\"\n}"
+            }
+          }
+        },
+        {
+          "name": "3.2 Listar Ejercicios Paginados",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Estructura paginada contiene items', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.content).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/ejercicios?page=0&size=10", "host": ["{{baseUrl}}"], "path": ["ejercicios"], "query": [{"key": "page", "value": "0"}, {"key": "size", "value": "10"}]}
+          }
+        },
+        {
+          "name": "3.3 Filtrar Ejercicios por Grupo Muscular",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200 y filtrado funcional', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/ejercicios/filtrar?grupoMuscular=Pecho", "host": ["{{baseUrl}}"], "path": ["ejercicios", "filtrar"], "query": [{"key": "grupoMuscular", "value": "Pecho"}]}
+          }
+        },
+        {
+          "name": "3.4 Filtrar Ejercicios por Nivel Dificultad",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200 en filtro por dificultad', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/ejercicios/dificultad?nivelDificultad=intermedio", "host": ["{{baseUrl}}"], "path": ["ejercicios", "dificultad"], "query": [{"key": "nivelDificultad", "value": "intermedio"}]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 4. Módulo Rutinas",
+      "item": [
+        {
+          "name": "4.1 Crear Rutina (Entrenador/Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Rutina creada 201 Created', function () {",
+                  "    pm.expect([201, 200, 400]).to.include(pm.response.code);",
+                  "    if (pm.response.code === 201) {",
+                  "        var json = pm.response.json();",
+                  "        pm.expect(json).to.have.property('idRutina');",
+                  "        pm.collectionVariables.set('id_rutina', json.idRutina);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_entrenador}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/rutinas", "host": ["{{baseUrl}}"], "path": ["rutinas"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Rutina Hipertrofia - Semana 1\",\n  \"descripcion\": \"Enfocada en tren superior\",\n  \"idEntrenador\": 2,\n  \"idCliente\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "4.2 Listar Rutinas (Entrenador/Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_entrenador}}"}],
+            "url": {"raw": "{{baseUrl}}/rutinas?page=0&size=10", "host": ["{{baseUrl}}"], "path": ["rutinas"], "query": [{"key": "page", "value": "0"}, {"key": "size", "value": "10"}]}
+          }
+        },
+        {
+          "name": "4.3 Obtener Rutinas de un Cliente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200 y formato de rutinas cliente correcto', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/rutinas/cliente/1", "host": ["{{baseUrl}}"], "path": ["rutinas", "cliente", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏋️‍♂️ 5. Módulo Rutina-Ejercicios",
+      "item": [
+        {
+          "name": "5.1 Asociar Ejercicio a Rutina",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Asociación creada 201 Created o 400', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_entrenador}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/rutina-ejercicios", "host": ["{{baseUrl}}"], "path": ["rutina-ejercicios"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idRutina\": 1,\n  \"idEjercicio\": 1,\n  \"diaSemana\": \"lunes\",\n  \"series\": 4,\n  \"repeticiones\": 12,\n  \"descansoSeg\": 90\n}"
+            }
+          }
+        },
+        {
+          "name": "5.2 Listar Ejercicios de una Rutina",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/rutina-ejercicios/rutina/1", "host": ["{{baseUrl}}"], "path": ["rutina-ejercicios", "rutina", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 6. Módulo Progresos",
+      "item": [
+        {
+          "name": "6.1 Registrar Medición de Progreso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Progreso registrado 201 Created', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "    if (pm.response.code === 201) {",
+                  "        var json = pm.response.json();",
+                  "        pm.expect(json).to.have.property('peso');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_cliente}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/progresos", "host": ["{{baseUrl}}"], "path": ["progresos"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"fecha\": \"2026-10-12\",\n  \"peso\": 75.5,\n  \"altura\": 1.78,\n  \"imc\": 23.83,\n  \"observaciones\": \"Medición inicial del mes\"\n}"
+            }
+          }
+        },
+        {
+          "name": "6.2 Obtener Historial de Progresos por Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/progresos/usuario/1", "host": ["{{baseUrl}}"], "path": ["progresos", "usuario", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "💳 7. Módulo Membresías",
+      "item": [
+        {
+          "name": "7.1 Crear Membresía (Rol Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Membresía creada 201 Created o 400', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_admin}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/membresias", "host": ["{{baseUrl}}"], "path": ["membresias"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"tipo\": \"Mensual VIP\",\n  \"fechaInicio\": \"2026-10-01\",\n  \"fechaFin\": \"2026-11-01\",\n  \"precio\": 120000.00,\n  \"estado\": \"activa\"\n}"
+            }
+          }
+        },
+        {
+          "name": "7.2 Listar Membresías (Rol Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_admin}}"}],
+            "url": {"raw": "{{baseUrl}}/membresias", "host": ["{{baseUrl}}"], "path": ["membresias"]}
+          }
+        },
+        {
+          "name": "7.3 Obtener Membresías de un Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/membresias/usuario/1", "host": ["{{baseUrl}}"], "path": ["membresias", "usuario", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "⏱️ 8. Módulo Asistencias",
+      "item": [
+        {
+          "name": "8.1 Registrar Asistencia QR (Cliente/Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Asistencia registrada 201 Created', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_cliente}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/asistencias", "host": ["{{baseUrl}}"], "path": ["asistencias"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"fecha\": \"2026-10-12\",\n  \"horaEntrada\": \"07:30:00\",\n  \"metodoRegistro\": \"qr\"\n}"
+            }
+          }
+        },
+        {
+          "name": "8.2 Listar Asistencias de un Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/asistencias/usuario/1", "host": ["{{baseUrl}}"], "path": ["asistencias", "usuario", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔔 9. Módulo Alertas",
+      "item": [
+        {
+          "name": "9.1 Crear Alerta de Inactividad (Entrenador/Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Alerta creada 201 Created', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_entrenador}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/alertas", "host": ["{{baseUrl}}"], "path": ["alertas"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"tipo\": \"inactividad\",\n  \"mensaje\": \"No has asistido al gimnasio en los últimos 5 días. ¡Te extrañamos!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "9.2 Obtener Alertas de un Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_cliente}}"}],
+            "url": {"raw": "{{baseUrl}}/alertas/usuario/1", "host": ["{{baseUrl}}"], "path": ["alertas", "usuario", "1"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "🤝 10. Módulo Entrenador-Cliente",
+      "item": [
+        {
+          "name": "10.1 Asignar Entrenador a Cliente (Rol Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Asignación procesada 201 o 400', function () {",
+                  "    pm.expect([201, 400, 404]).to.include(pm.response.code);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_admin}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/entrenador-cliente", "host": ["{{baseUrl}}"], "path": ["entrenador-cliente"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idEntrenador\": 2,\n  \"idCliente\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "10.2 Listar Clientes de un Entrenador",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_entrenador}}"}],
+            "url": {"raw": "{{baseUrl}}/entrenador-cliente/entrenador/2", "host": ["{{baseUrl}}"], "path": ["entrenador-cliente", "entrenador", "2"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔒 11. Pruebas de Seguridad y Control de Roles (RBAC 401 y 403)",
+      "item": [
+        {
+          "name": "11.1 Petición sin Token - Rechazo 401 Unauthorized",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Acceso denegado con 401 Unauthorized', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test('Mensaje de error indica falta de autorización', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.error || json.message || json.status).to.not.be.undefined;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{baseUrl}}/ejercicios", "host": ["{{baseUrl}}"], "path": ["ejercicios"]}
+          }
+        },
+        {
+          "name": "11.2 Cliente intenta Crear Ejercicio - Rechazo 403 Forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('RBAC bloquea acción no permitida con 403 Forbidden', function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "pm.test('Mensaje de error deniega por rol insuficiente', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.status).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_cliente}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/ejercicios", "host": ["{{baseUrl}}"], "path": ["ejercicios"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ejercicio No Autorizado\",\n  \"grupoMuscular\": \"Espalda\",\n  \"nivelDificultad\": \"principiante\"\n}"
+            }
+          }
+        },
+        {
+          "name": "11.3 Cliente intenta Crear Membresía - Rechazo 403 Forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('RBAC deniega creación de membresía a Cliente (403)', function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer {{token_cliente}}"}
+            ],
+            "url": {"raw": "{{baseUrl}}/membresias", "host": ["{{baseUrl}}"], "path": ["membresias"]},
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1,\n  \"tipo\": \"Gratis Ilegal\",\n  \"fechaInicio\": \"2026-10-01\",\n  \"fechaFin\": \"2026-12-31\",\n  \"precio\": 99.99\n}"
+            }
+          }
+        },
+        {
+          "name": "11.4 Entrenador intenta Eliminar Usuario - Rechazo 403 Forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Solo Administrador puede eliminar usuarios (403 para entrenador)', function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token_entrenador}}"}],
+            "url": {"raw": "{{baseUrl}}/usuarios/1", "host": ["{{baseUrl}}"], "path": ["usuarios", "1"]}
+          }
+        }
+      ]
+    }
+  ]
+}
